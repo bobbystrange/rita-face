@@ -14,7 +14,7 @@ export default class TagsPage extends React.Component {
     componentDidMount() {
         const username = getUsername();
         fetchTags(username).then(res => {
-            const tags = res.data;
+            const tags = res.data.data;
             console.log("tags: ", tags);
             console.log("typeof tags", typeof tags);
             this.setState({

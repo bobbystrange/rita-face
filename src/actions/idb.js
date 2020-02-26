@@ -7,9 +7,10 @@ const DATABASE_NAME = "rita-face";
 const POST_STORE_NAME = "post";
 
 export function handlePostsRes(refer, res) {
+    const data = res.data.data;
     const size = refer.state.size;
-    const total = res.data.total;
-    const current_ims = res.data.ims;
+    const total = data.total;
+    const current_ims = data.ims;
     loadOrFetchPosts(current_ims).then(current_posts => {
         const totalPage = computeTotalPage(total, size);
         refer.setState({
@@ -20,9 +21,15 @@ export function handlePostsRes(refer, res) {
     });
 }
 
-export function handlePostsErr(refer, err) {
-    let message = _.get(err, "response.data", "");
-    if (!message) message = `Fail to fetch posts, http status is ${err.message}`;
+export function handleMessage(refer, message) {
+    refer.setState({
+        error: message,
+    })
+}
+
+export function handleErr(refer, err) {
+    let message = _.get(err, "response.data.message", "");
+    if (!message) message = `Fail to fetch resource from remote server, http status is ${err.message}`;
     refer.setState({
         error: message,
     })
@@ -45,13 +52,11 @@ export async function loadOrFetchPosts(current_ims) {
         let post;
         // no cache, then fetch it from internet
         if (!cache_post || mtime > cache_post.mtime) {
-            const res = await fetchPostById(username, id);
-            post = res.data;
-            if (post) {
+            post = _.get(await fetchPostById(username, id), "data.data", "");
+            if (post){
                 const tx2 = db.transaction(POST_STORE_NAME, "readwrite");
                 const store2 = tx2.objectStore(POST_STORE_NAME);
-                await store2.put(post);
-                await tx2.done;
+                store2.put(post);
             }
         } else post = cache_post;
 
@@ -73,12 +78,11 @@ export async function loadOrFetchPostByName(name) {
     await tx1.done;
 
     if (!post) {
-        post = (await fetchPostByName(username, name)).data;
+        post = _.get(await fetchPostByName(username, name), "data.data", "");
         if (post) {
             const tx2 = db.transaction(POST_STORE_NAME, "readwrite");
             const store2 = tx2.objectStore(POST_STORE_NAME);
-            await store2.put(post);
-            await tx2.done;
+            store2.put(post);
         }
     }
     return post;

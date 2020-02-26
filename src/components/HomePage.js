@@ -2,7 +2,7 @@ import React from 'react';
 import $ from "jquery";
 import Footer from './common/Footer';
 import Header from './common/Header'
-import {fetchPagePostIms, handlePostsErr, handlePostsRes} from "../actions";
+import {fetchPagePostIms, handleErr, handleMessage, handlePostsRes} from "../actions";
 import Pagination from "./common/Pagination";
 import PostSummary from "./PostSummary";
 import {getStyle, getUsername} from "../config";
@@ -32,8 +32,10 @@ export default class HomePage extends React.Component {
         const size = this.state.size;
 
         fetchPagePostIms(username, page, size).then(
-                res => handlePostsRes(this, res),
-                err => handlePostsErr(this, err)
+                res => {
+                    if (res.data.success) handlePostsRes(this, res);
+                    else handleMessage(this, res.data.message);
+                }, err => handleErr(this, err)
         );
     }
 

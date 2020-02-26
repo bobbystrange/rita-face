@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from './common/Footer';
 import Header from './common/Header'
-import {fetchPagePostImsByTag, handlePostsErr, handlePostsRes} from "../actions";
+import {fetchPagePostImsByTag, handleErr, handleMessage, handlePostsRes} from "../actions";
 import Pagination from "./common/Pagination";
 import {getPostLink, getUsername} from "../config";
 import {getSearchValue} from "../util/url";
@@ -33,8 +33,10 @@ export default class TagPage extends React.Component {
         const tag = this.state.tag;
 
         fetchPagePostImsByTag(username, tag, page, size).then(
-                res => handlePostsRes(this, res),
-                err => handlePostsErr(this, err)
+                res => {
+                    if (res.data.success) handlePostsRes(this, res);
+                    else handleMessage(this, res.data.message);
+                }, err => handleErr(this, err)
         );
     }
 
