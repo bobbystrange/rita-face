@@ -1,0 +1,19 @@
+a.no-underline {
+    text-decoration: none;
+}
+
+a.post-title {
+    color: black;
+}
+
+a.post-title:hover {
+    color: dodgerblue;
+}
+
+a.footer-link {
+    color: slategray;
+}
+
+a.footer-link:hover {
+    color: dodgerblue;
+}
