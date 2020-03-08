@@ -10,7 +10,7 @@ export function handlePostsRes(refer, res) {
     const data = res.data.data;
     const size = refer.state.size;
     const total = data.total;
-    const current_ims = data.ims;
+    const current_ims = data.items;
     loadOrFetchPosts(current_ims).then(current_posts => {
         const totalPage = computeTotalPage(total, size);
         refer.setState({
@@ -53,7 +53,7 @@ export async function loadOrFetchPosts(current_ims) {
         // no cache, then fetch it from internet
         if (!cache_post || mtime > cache_post.mtime) {
             post = _.get(await fetchPostById(username, id), "data.data", "");
-            if (post){
+            if (post) {
                 const tx2 = db.transaction(POST_STORE_NAME, "readwrite");
                 const store2 = tx2.objectStore(POST_STORE_NAME);
                 store2.put(post);
@@ -146,7 +146,7 @@ async function getDB() {
         upgrade(db, oldVersion, newVersion, transaction) {
             if (oldVersion === 0) {
                 const store = db.createObjectStore(POST_STORE_NAME,
-                        {keyPath: 'id', autoIncrement: false});
+                    {keyPath: 'id', autoIncrement: false});
                 store.createIndex("name", "name", {unique: true});
             }
         },

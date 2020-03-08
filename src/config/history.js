@@ -2,10 +2,10 @@ import {createBrowserHistory} from 'history';
 
 // A singleton history object for easy API navigation
 export const history = createBrowserHistory(
-        // {
-        //     basename: '/',
-        //     forceRefresh: true,
-        // }
+    // {
+    //     basename: '/',
+    //     forceRefresh: true,
+    // }
 );
 
 export const push = (path, state) => {

@@ -1,6 +1,6 @@
 import {ajax} from "../config";
 
-export function fetchSetting(username) {
+export function getSetting(username) {
     return ajax.get({
         url: `/${username}/setting`,
     });

@@ -11,16 +11,16 @@ export default class RandomSpinnerPage extends React.Component {
             spinners.push(i);
         }
         return (
-                <div>
-                    <Header/>
-                    <div className="container-fluid" style={{
-                        marginTop: 84,
-                    }}>
-                        {
-                            spinners.map(i => <RandomSpinner key={i}/>)
-                        }
-                    </div>
+            <div>
+                <Header/>
+                <div className="container-fluid" style={{
+                    marginTop: 84,
+                }}>
+                    {
+                        spinners.map(i => <RandomSpinner key={i}/>)
+                    }
                 </div>
+            </div>
         );
     }
 }

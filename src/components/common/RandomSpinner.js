@@ -8,15 +8,15 @@ export default class RandomSpinner extends React.Component {
         const top = randi2(0, 100);
 
         return (
-                <div className="spinner-grow" role="status" style={{
-                    position: "absolute",
-                    left: `${left}%`,
-                    top: `${top}%`,
-                    width: `${diameter}rem`,
-                    height: `${diameter}rem`,
-                }}>
-                    <span className="sr-only">Loading...</span>
-                </div>
+            <div className="spinner-grow" role="status" style={{
+                position: "absolute",
+                left: `${left}%`,
+                top: `${top}%`,
+                width: `${diameter}rem`,
+                height: `${diameter}rem`,
+            }}>
+                <span className="sr-only">Loading...</span>
+            </div>
         );
     }
 }

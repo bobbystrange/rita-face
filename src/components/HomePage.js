@@ -2,10 +2,10 @@ import React from 'react';
 import $ from "jquery";
 import Footer from './common/Footer';
 import Header from './common/Header'
-import {fetchPagePostIms, handleErr, handleMessage, handlePostsRes} from "../actions";
+import {getPagePostIm, handleErr, handleMessage, handlePostsRes} from "../actions";
 import Pagination from "./common/Pagination";
 import PostSummary from "./PostSummary";
-import {getStyle, getUsername} from "../config";
+import {getStyle, getUsername, storage} from "../config";
 import {getSearchValue} from "../util/url";
 
 export default class HomePage extends React.Component {
@@ -24,6 +24,15 @@ export default class HomePage extends React.Component {
             style: getStyle(),
             error: "",
         };
+
+        document.title = "Home page - Lovaly Rita ";
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const setting = storage.getUserSetting();
+        if (setting) {
+            document.title = setting.fullName + "'s Blog";
+        }
     }
 
     componentDidMount() {
@@ -31,11 +40,11 @@ export default class HomePage extends React.Component {
         const page = this.state.page;
         const size = this.state.size;
 
-        fetchPagePostIms(username, page, size).then(
-                res => {
-                    if (res.data.success) handlePostsRes(this, res);
-                    else handleMessage(this, res.data.message);
-                }, err => handleErr(this, err)
+        getPagePostIm(username, page, size).then(
+            res => {
+                if (res.data.success) handlePostsRes(this, res);
+                else handleMessage(this, res.data.message);
+            }, err => handleErr(this, err)
         );
     }
 
@@ -48,39 +57,39 @@ export default class HomePage extends React.Component {
         }
 
         return (
-                // style={{background: "#f6f6f6"}}
-                // className="row"
-                <div>
-                    {this.state.style ?
-                            <link rel="stylesheet" type="text/css"
-                                  href={`/static/css/highlight/${this.state.style}.css`}/>
-                            : <span/>
+            // style={{background: "#f6f6f6"}}
+            // className="row"
+            <div>
+                {this.state.style ?
+                    <link rel="stylesheet" type="text/css"
+                          href={`/static/css/highlight/${this.state.style}.css`}/>
+                    : <span/>
+                }
+                <Header/>
+                <div className="container-fluid" style={{
+                    marginTop: 84,
+                }}>
+                    {
+                        this.state.posts.map((post, index) => (
+                            <PostSummary
+                                key={`${index}`}
+                                id={post.id}
+                                name={post.name}
+                                title={post.title}
+                                ctime={post.ctime}
+                                tags={post.tags}
+                                summary={post.summary}/>
+                        ))
                     }
-                    <Header/>
-                    <div className="container-fluid" style={{
-                        marginTop: 84,
-                    }}>
-                        {
-                            this.state.posts.map((post, index) => (
-                                    <PostSummary
-                                            key={`${index}`}
-                                            id={post.id}
-                                            name={post.name}
-                                            title={post.title}
-                                            ctime={post.ctime}
-                                            tags={post.tags}
-                                            summary={post.summary}/>
-                            ))
-                        }
-                    </div>
-
-                    <Pagination
-                            pattern="/?page=%d"
-                            size={this.state.size}
-                            page={this.state.page}
-                            total={this.state.total}/>
-                    <Footer/>
                 </div>
+
+                <Pagination
+                    pattern="/?page=%d"
+                    size={this.state.size}
+                    page={this.state.page}
+                    total={this.state.total}/>
+                <Footer/>
+            </div>
         );
     }
 }

@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-import {storage} from "../config";
+import {storage} from "./index";
 import {getSearchValue} from "../util/url";
 
 // const md = new MarkdownIt({
@@ -36,8 +36,8 @@ const md = MarkdownIt({
         if (lang && hljs.getLanguage(lang)) {
             try {
                 return '<pre class="hljs"><code>' +
-                        hljs.highlight(lang, str, true).value +
-                        '</code></pre>';
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
             } catch (__) {
             }
         }

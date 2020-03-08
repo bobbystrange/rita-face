@@ -1,11 +1,9 @@
 import React from 'react';
-import {fetchSetting} from "../../actions";
+import {getSetting} from "../../actions";
 import {getUsername, storage} from "../../config";
 
 export default class Header extends React.Component {
     state = {
-        // data:image/jpg;base64,
-        // /static/images/
         avatar: "",
         fullName: "",
     };
@@ -22,8 +20,8 @@ export default class Header extends React.Component {
         }
 
         const username = getUsername();
-        fetchSetting(username).then(res => {
-            const setting = res.data;
+        getSetting(username).then(res => {
+            const setting = res.data.data;
             this.setState({
                 fullName: setting.fullName,
                 avatar: setting.avatar,
@@ -35,124 +33,125 @@ export default class Header extends React.Component {
 
     render() {
         return (
-                <div className="row" style={{
-                    position: "fixed",
-                    top: 0,
-                    zIndex: 2,
-                    width: "100%",
-                    background: "#fff",
+            <div className="row" style={{
+                position: "fixed",
+                top: 0,
+                zIndex: 2,
+                width: "100%",
+                // 200 229 201
+                background: "#fff",
+            }}>
+                <div className="col-8 offset-2" style={{
+                    height: 48,
                 }}>
-                    <div className="col-8 offset-2" style={{
-                        height: 48,
-                    }}>
-                        <div className="row">
-                            <a href="/" style={{
-                                display: "flex",
-                                color: "#012",
+                    <div className="row">
+                        <a href="/" style={{
+                            display: "flex",
+                            color: "#012",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} className="btn">
+                            <img src={`${this.state.avatar}`}
+                                 alt="avatar" style={{
+                                height: 32,
+                            }}/>
+                            <h4 style={{
+                                marginLeft: 5,
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} className="btn">
-                                <img src={`${this.state.avatar}`}
-                                     alt="avatar" style={{
-                                    height: 32,
-                                }}/>
-                                <h4 style={{
-                                    marginLeft: 5,
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>{this.state.fullName}</h4>
-                            </a>
+                            }}>{this.state.fullName}</h4>
+                        </a>
 
-                            {/*{*/}
-                            {/*    ["Home", "Archives", "Tags", "Styles", "Search", "About"].map((name, index) => {*/}
-                            {/*        let href;*/}
-                            {/*        if (name === 'Home'){*/}
-                            {/*            href = "/";*/}
-                            {/*        } else href = name.toLowerCase();*/}
-                            {/*        return <a className="btn btn-light" style={{*/}
-                            {/*            color: "#258",*/}
-                            {/*            marginLeft: "auto",*/}
-                            {/*            marginRight: 5,*/}
-                            {/*            marginTop: "auto",*/}
-                            {/*            marginBottom: "auto",*/}
-                            {/*        }} href={href} role="button" key={index}>*/}
-                            {/*            <p style={{*/}
-                            {/*                marginTop: "auto",*/}
-                            {/*                marginBottom: "auto",*/}
-                            {/*            }}>{name}</p>*/}
-                            {/*        </a>*/}
-                            {/*    })*/}
-                            {/*}*/}
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginLeft: "auto",
-                                marginRight: 5,
+                        {/*{*/}
+                        {/*    ["Home", "Archives", "Tags", "Styles", "Search", "About"].map((name, index) => {*/}
+                        {/*        let href;*/}
+                        {/*        if (name === 'Home'){*/}
+                        {/*            href = "/";*/}
+                        {/*        } else href = name.toLowerCase();*/}
+                        {/*        return <a className="btn btn-light" style={{*/}
+                        {/*            color: "#258",*/}
+                        {/*            marginLeft: "auto",*/}
+                        {/*            marginRight: 5,*/}
+                        {/*            marginTop: "auto",*/}
+                        {/*            marginBottom: "auto",*/}
+                        {/*        }} href={href} role="button" key={index}>*/}
+                        {/*            <p style={{*/}
+                        {/*                marginTop: "auto",*/}
+                        {/*                marginBottom: "auto",*/}
+                        {/*            }}>{name}</p>*/}
+                        {/*        </a>*/}
+                        {/*    })*/}
+                        {/*}*/}
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginLeft: "auto",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>Home</p>
-                            </a>
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginRight: 5,
+                            }}>Home</p>
+                        </a>
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/tags" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/tags" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>Tags</p>
-                            </a>
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginRight: 5,
+                            }}>Tags</p>
+                        </a>
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/archives" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/archives" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>Archives</p>
-                            </a>
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginRight: 5,
+                            }}>Archives</p>
+                        </a>
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/styles" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/styles" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>Styles</p>
-                            </a>
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginRight: 5,
+                            }}>Styles</p>
+                        </a>
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/search" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/search" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>Search</p>
-                            </a>
-                            <a className="btn btn-light" style={{
-                                color: "#258",
-                                marginRight: 5,
+                            }}>Search</p>
+                        </a>
+                        <a className="btn btn-light" style={{
+                            color: "#258",
+                            marginRight: 5,
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                        }} href="/about" role="button">
+                            <p style={{
                                 marginTop: "auto",
                                 marginBottom: "auto",
-                            }} href="/about" role="button">
-                                <p style={{
-                                    marginTop: "auto",
-                                    marginBottom: "auto",
-                                }}>About</p>
-                            </a>
-                        </div>
+                            }}>About</p>
+                        </a>
                     </div>
                 </div>
+            </div>
         );
     }
 }

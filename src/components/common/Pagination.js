@@ -21,20 +21,20 @@ export default class Pagination extends React.Component {
         if (page === 1) {
             const prev = this.props.pattern.replace('%d', `${page}`);
             return (
-                    <li className="page-item disabled">
-                        <a className="page-link" href={`${prev}`} aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
+                <li className="page-item disabled">
+                    <a className="page-link" href={`${prev}`} aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
             );
         } else {
             const prev = this.props.pattern.replace('%d', `${page - 1}`);
             return (
-                    <li className="page-item">
-                        <a className="page-link" href={`${prev}`} aria-label="Previous">
-                            <span aria-hidden="false">&laquo;</span>
-                        </a>
-                    </li>
+                <li className="page-item">
+                    <a className="page-link" href={`${prev}`} aria-label="Previous">
+                        <span aria-hidden="false">&laquo;</span>
+                    </a>
+                </li>
             );
         }
     }
@@ -46,20 +46,20 @@ export default class Pagination extends React.Component {
         if (page === totalPage) {
             const next = pattern.replace('%d', `${page}`);
             return (
-                    <li className="page-item disabled">
-                        <a className="page-link" href={`${next}`} aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
+                <li className="page-item disabled">
+                    <a className="page-link" href={`${next}`} aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             );
         } else {
             const next = pattern.replace('%d', `${page + 1}`);
             return (
-                    <li className="page-item">
-                        <a className="page-link" href={`${next}`} aria-label="Previous">
-                            <span aria-hidden="false">&raquo;</span>
-                        </a>
-                    </li>
+                <li className="page-item">
+                    <a className="page-link" href={`${next}`} aria-label="Previous">
+                        <span aria-hidden="false">&raquo;</span>
+                    </a>
+                </li>
             );
         }
     }
@@ -79,25 +79,25 @@ export default class Pagination extends React.Component {
         });
 
         return (
-                <div className="container-fluid">
-                    <nav aria-label="pagination" style={{
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                    }}>
-                        <ul className="pagination justify-content-center">
-                            {this.leftArrowQuo()}
-                            {slice.map(k => (
-                                    <li className="page-item" key={k}>
-                                        <a className="page-link link-secondary"
-                                           href={`${pattern.replace('%d', `${k}`)}`}>
-                                            {k}
-                                        </a>
-                                    </li>
-                            ))}
-                            {this.rightArrowQuo()}
-                        </ul>
-                    </nav>
-                </div>
+            <div className="container-fluid">
+                <nav aria-label="pagination" style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                }}>
+                    <ul className="pagination justify-content-center">
+                        {this.leftArrowQuo()}
+                        {slice.map(k => (
+                            <li className="page-item" key={k}>
+                                <a className="page-link link-secondary"
+                                   href={`${pattern.replace('%d', `${k}`)}`}>
+                                    {k}
+                                </a>
+                            </li>
+                        ))}
+                        {this.rightArrowQuo()}
+                    </ul>
+                </nav>
+            </div>
         );
     }
 }

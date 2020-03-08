@@ -11,12 +11,12 @@ function App() {
 
         if (item.component) {
             children.push(
-                    <Route
-                            key={path}
-                            render={props => <item.component {...props}/>}
-                            exact
-                            path={path}
-                    />
+                <Route
+                    key={path}
+                    render={props => <item.component {...props}/>}
+                    exact
+                    path={path}
+                />
             );
         }
         if (item.childRoutes) {
@@ -25,9 +25,9 @@ function App() {
     };
     routes.forEach(item => renderRoute(item, '/'));
     return (
-            <BrowserRouter>
-                <Switch>{children}</Switch>
-            </BrowserRouter>
+        <BrowserRouter>
+            <Switch>{children}</Switch>
+        </BrowserRouter>
 
     );
 }

@@ -7,11 +7,18 @@ import {getSearchValue} from "../util/url";
 import Pagination from "./common/Pagination";
 import Footer from "./common/Footer";
 import {yyyyMMdd} from "../util/time";
-import {getPostLink, getStyle, md2html} from "../config";
+import {getPostLink, getStyle, md2html, pushForcibly, storage} from "../config";
 
 export class ArchivesPage extends React.Component {
     constructor(props) {
         super(props);
+        const setting = storage.getUserSetting();
+        if (!setting) {
+            pushForcibly("/")
+        } else {
+            document.title = "Archives -" + setting.fullName;
+        }
+
         this.state = {
             posts: [],
             page: getSearchValue('page', 1),
@@ -38,37 +45,37 @@ export class ArchivesPage extends React.Component {
 
     render() {
         return (
-                <div>
-                    {this.state.style ?
-                            <link rel="stylesheet" type="text/css"
-                                  href={`/static/css/highlight/${this.state.style}.css`}/>
-                            : <span/>
-                    }
-                    <Header/>
-                    <div className="container-fluid" style={{
-                        marginTop: 64,
-                    }}>
-                        <div className="col-8 offset-2" style={{}}>
-                            <Timeline>
-                                {
-                                    this.state.posts.map((post, index) => {
-                                        const ctime = yyyyMMdd(post.ctime);
-                                        const link = getPostLink(ctime, post.name);
-                                        return <ArchivesSummary key={index} id={post.id}
-                                                                title={post.title} link={link} ctime={ctime}
-                                                                summary={post.summary}/>
-                                    })
-                                }
-                            </Timeline>
-                        </div>
+            <div>
+                {this.state.style ?
+                    <link rel="stylesheet" type="text/css"
+                          href={`/static/css/highlight/${this.state.style}.css`}/>
+                    : <span/>
+                }
+                <Header/>
+                <div className="container-fluid" style={{
+                    marginTop: 64,
+                }}>
+                    <div className="col-8 offset-2" style={{}}>
+                        <Timeline>
+                            {
+                                this.state.posts.map((post, index) => {
+                                    const ctime = yyyyMMdd(post.ctime);
+                                    const link = getPostLink(ctime, post.name);
+                                    return <ArchivesSummary key={index} id={post.id}
+                                                            title={post.title} link={link} ctime={ctime}
+                                                            summary={post.summary}/>
+                                })
+                            }
+                        </Timeline>
                     </div>
-                    <Pagination
-                            pattern="/archives?page=%d"
-                            size={this.state.size}
-                            page={this.state.page}
-                            total={this.state.total}/>
-                    <Footer/>
                 </div>
+                <Pagination
+                    pattern="/archives?page=%d"
+                    size={this.state.size}
+                    page={this.state.page}
+                    total={this.state.total}/>
+                <Footer/>
+            </div>
         );
     }
 }

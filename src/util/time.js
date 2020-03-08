@@ -59,8 +59,8 @@ export function dateFormat(date, fmt) {
         let f = o[i][2];
         if (f) v = f(v);
         while (
-                new RegExp("(" + k + ")").test(fmt)
-                ) {
+            new RegExp("(" + k + ")").test(fmt)
+            ) {
             fmt = fmt.replace(RegExp.$1, `${v}`);
         }
     }

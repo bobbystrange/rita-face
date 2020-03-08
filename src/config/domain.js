@@ -3,7 +3,9 @@ import {dateFormat} from "../util/time";
 
 export function getUsername() {
     const hostname = window.location.hostname;
-    return hostname.slice(0, hostname.indexOf("."));
+    let ind = hostname.indexOf(".");
+    if (ind === -1) return "tuke";
+    return hostname.slice(0, ind);
 }
 
 export function getPostLink(ctime, name) {

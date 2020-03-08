@@ -1,9 +1,9 @@
 import {ajax} from "../config";
 
 // [{id, mtime}]
-export function fetchPagePostIms(username, page, size) {
+export function getPagePostIm(username, page, size) {
     return ajax.get({
-        url: `/${username}/post/ims/page`,
+        url: `/${username}/post/im/page`,
         params: {
             page: page,
             size: size,
@@ -12,9 +12,9 @@ export function fetchPagePostIms(username, page, size) {
 }
 
 // [{id, mtime}]
-export function fetchPagePostImsByTag(username, tag, page, size) {
+export function getPagePostImByTag(username, tag, page, size) {
     return ajax.get({
-        url: `/${username}/post/ims/page/tag/${tag}`,
+        url: `/${username}/post/im/page/tag/${tag}`,
         params: {
             page: page,
             size: size,

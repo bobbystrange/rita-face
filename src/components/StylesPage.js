@@ -1,12 +1,22 @@
 import React from 'react';
 import Header from "./common/Header";
 import Footer from "./common/Footer";
-import {HIGHLIGHT_STYLE_LIST, storage} from '../config'
+import {HIGHLIGHT_STYLE_LIST, pushForcibly, storage} from '../config'
 
 export default class StylesPage extends React.Component {
-    state = {
-        path: "/"
-    };
+    constructor(props) {
+        super(props);
+        const setting = storage.getUserSetting();
+        if (!setting) {
+            pushForcibly("/")
+        } else {
+            document.title = "Highlight Style -" + setting.fullName;
+        }
+        this.state = {
+            path: "/"
+        };
+    }
+
 
     componentDidMount() {
         let referrer = document.referrer;
@@ -36,37 +46,37 @@ export default class StylesPage extends React.Component {
 
     render() {
         return (
-                <div>
-                    <Header/>
-                    <div className="container-fluid" style={{
-                        marginTop: 64,
+            <div>
+                <Header/>
+                <div className="container-fluid" style={{
+                    marginTop: 64,
+                }}>
+                    <div className="col-6 offset-3" style={{
+                        // textAlign: "center",
                     }}>
-                        <div className="col-6 offset-3" style={{
-                            // textAlign: "center",
-                        }}>
-                            {
-                                HIGHLIGHT_STYLE_LIST.map((style, index) => (
-                                        <a className="btn btn-light" style={{
-                                            color: "#258",
-                                            marginLeft: "auto",
-                                            marginRight: 5,
-                                            marginTop: "auto",
-                                            marginBottom: "auto",
-                                        }}
-                                           onClick={e => this.clickStyle(style)}
-                                           href={this.state.path === "/" ? "/" : `${this.state.path}?style=${style}`}
-                                           role="button" key={index}>
-                                            <p style={{
-                                                marginTop: "auto",
-                                                marginBottom: "auto",
-                                            }}>{style}</p>
-                                        </a>
-                                ))
-                            }
-                        </div>
+                        {
+                            HIGHLIGHT_STYLE_LIST.map((style, index) => (
+                                <a className="btn btn-light" style={{
+                                    color: "#258",
+                                    marginLeft: "auto",
+                                    marginRight: 5,
+                                    marginTop: "auto",
+                                    marginBottom: "auto",
+                                }}
+                                   onClick={e => this.clickStyle(style)}
+                                   href={this.state.path === "/" ? "/" : `${this.state.path}?style=${style}`}
+                                   role="button" key={index}>
+                                    <p style={{
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                    }}>{style}</p>
+                                </a>
+                            ))
+                        }
                     </div>
-                    <Footer/>
                 </div>
+                <Footer/>
+            </div>
         );
     }
 }
