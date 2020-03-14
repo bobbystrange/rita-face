@@ -7,9 +7,10 @@ axios.defaults.withCredentials = false;
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 if (process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL = `http://localhost:8080/api/v1/face`;
+} else if (process.env.REACT_APP_ENV === 'docker') {
+    axios.defaults.baseURL = `/api/v1/face`;
 } else {
     axios.defaults.baseURL = `http://stranges.org/api/v1/face`;
-
 }
 
 axios.interceptors.request.use(

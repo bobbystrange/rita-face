@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Header from "./common/Header";
 import Footer from "./common/Footer";
 import {loadOrFetchPostByName} from "../actions";
-import {getPostLink, getUsername, md2html} from "../config";
+import {getPostLink, md2html} from "../config";
 import {dateFormat} from "../util/time";
 import {getStyle} from "../config/markdown";
 import Tag from "./common/Tag";
@@ -48,10 +48,8 @@ export default class PostPage extends React.Component {
 
     componentDidMount() {
         // fetch post
-        const username = getUsername();
         const name = this.state.name;
-
-        loadOrFetchPostByName(username, name).then(post => {
+        loadOrFetchPostByName(name).then(post => {
             const content = post.content;
             this.setState({
                 id: post.id,
@@ -86,7 +84,7 @@ export default class PostPage extends React.Component {
     }
 
     render() {
-        const {ctime, mtime} = this.state;
+        const {ctime, mtime, tags} = this.state;
         return (
             <div>
                 {this.state.style ?
@@ -114,9 +112,8 @@ export default class PostPage extends React.Component {
                             {ctime !== mtime &&
                             <div className="mb-1 mt-2 ">Modified at {mtime}&ensp;/&ensp;</div>
                             }
-                            {
-                                this.state.tags.map((tag, index) =>
-                                    <Tag tag={tag} key={`${index}`}/>)
+                            {tags && tags.map((tag, index) =>
+                                <Tag tag={tag} key={`${index}`}/>)
                             }
                         </div>
 

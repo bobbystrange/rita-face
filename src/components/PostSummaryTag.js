@@ -11,6 +11,7 @@ export default class PostSummaryTag extends React.Component {
     };
 
     render() {
+        const {tag} = this.props.tag;
         return (
             <div style={{
                 background: this.state.color,
@@ -30,8 +31,8 @@ export default class PostSummaryTag extends React.Component {
                     color: "#a6a7a8",
                     marginTop: 0,
                     marginLeft: 3,
-                }} href={`/tags/${this.props.tag}`}>
-                    {this.props.tag}
+                }} href={`/tags/${tag.name}`}>
+                    {tag.name}
                 </a>
             </div>
         );

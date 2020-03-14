@@ -6,7 +6,7 @@ import {yyyyMMdd} from "../util/time";
 
 export default class PostSummary extends React.Component {
     static propTypes = {
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         ctime: PropTypes.number.isRequired,
@@ -17,6 +17,8 @@ export default class PostSummary extends React.Component {
     render() {
         const ctime = yyyyMMdd(this.props.ctime);
         const link = getPostLink(ctime, this.props.name);
+        const {tags} = this.props.tags;
+
         return (
             <div className="col-8 offset-2" style={{
                 marginBottom: 10,
@@ -40,9 +42,8 @@ export default class PostSummary extends React.Component {
                 }}>
                     <div style={{marginBottom: 0,}}>{ctime}</div>
                     <div style={{marginBottom: 0,}}>&ensp;/&ensp;</div>
-                    {
-                        this.props.tags.map((tag, index) =>
-                            <PostSummaryTag tag={tag} key={`${index}`}/>)
+                    {tags && tags.map((tag, index) =>
+                        <PostSummaryTag tag={tag} key={`${index}`}/>)
                     }
                 </div>
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Tag extends React.Component {
     static propTypes = {
-        tag: PropTypes.string.isRequired,
+        tag: PropTypes.object.isRequired,
     };
 
     state = {
@@ -27,8 +27,8 @@ export default class Tag extends React.Component {
             }}>
                 <a className="no-underline p-2" style={{
                     color: "#a6a7a8",
-                }} href={`/tags/${tag}`}>
-                    {tag}
+                }} href={`/tags/${tag.name}`}>
+                    {tag.name}
                 </a>
             </div>
         );
