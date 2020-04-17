@@ -97,7 +97,8 @@ class ArchivesSummary extends React.Component {
         return (<Event title={<a href={this.props.link} className="post-title no-underline">{this.props.title}</a>}
                        interval={this.props.ctime}
                        id={`archives-summary-${this.props.id}`}>
-            <div dangerouslySetInnerHTML={{__html: md2html(this.props.summary)}}/>
+            {this.props.summary &&
+            <div dangerouslySetInnerHTML={{__html: md2html(this.props.summary)}}/>}
         </Event>)
     }
 

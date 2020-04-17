@@ -83,6 +83,7 @@ export async function loadOrFetchPostByName(name) {
             const tx2 = db.transaction(POST_STORE_NAME, "readwrite");
             const store2 = tx2.objectStore(POST_STORE_NAME);
             store2.put(post);
+            await tx2.done
         }
     }
     return post;

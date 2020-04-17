@@ -21,13 +21,17 @@ export default class Header extends React.Component {
 
         const username = getUsername();
         getSetting(username).then(res => {
-            const setting = res.data.data;
-            this.setState({
-                fullName: setting.fullName,
-                avatar: setting.avatar,
-                error: "",
-            });
-            storage.setUserSetting(setting)
+            if (res.data.code === 0) {
+                const setting = res.data.data;
+                this.setState({
+                    fullName: setting.fullName,
+                    avatar: setting.avatar,
+                    error: "",
+                });
+                storage.setUserSetting(setting)
+            } else {
+                console.log(res.data.msg)
+            }
         });
     }
 

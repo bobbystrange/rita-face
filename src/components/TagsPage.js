@@ -24,13 +24,15 @@ export default class TagsPage extends React.Component {
     componentDidMount() {
         const username = getUsername();
         fetchTags(username).then(res => {
-            const tags = res.data.data;
-            console.log("tags: ", tags);
-            console.log("typeof tags", typeof tags);
-            this.setState({
-                tags: tags,
-                error: "",
-            });
+            if (res.data.code === 0){
+                const tags = res.data.data;
+                console.log("tags: ", tags);
+                console.log("typeof tags", typeof tags);
+                this.setState({
+                    tags: tags,
+                    error: "",
+                });
+            }
         }, err => {
             let message = _.get(err, "response.data.message", "");
             if (!message) message = `Fail to fetch your posts, http status is ${err.message}`;

@@ -40,7 +40,7 @@ export default class TagPage extends React.Component {
 
         getPagePostImByTag(username, tag, page, size).then(
             res => {
-                if (res.data.success) handlePostsRes(this, res);
+                if (res.data.code === 0) handlePostsRes(this, res);
                 else handleMessage(this, res.data.message);
             }, err => handleErr(this, err)
         );

@@ -42,7 +42,7 @@ export default class HomePage extends React.Component {
 
         getPagePostIm(username, page, size).then(
             res => {
-                if (res.data.success) handlePostsRes(this, res);
+                if (res.data.code === 0) handlePostsRes(this, res);
                 else handleMessage(this, res.data.message);
             }, err => handleErr(this, err)
         );
